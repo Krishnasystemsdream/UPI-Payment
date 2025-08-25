@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Krishna Systems - UPI Payment</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: #f5f5f5;
+      padding: 30px;
+    }
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      max-width: 400px;
+      margin: auto;
+      padding: 25px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    .profile {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      margin: auto;
+      display: block;
+      object-fit: cover;
+      border: 3px solid #4CAF50;
+    }
+    img.qr {
+      width: 250px;
+      height: 250px;
+      margin: 20px 0;
+    }
+    .upi-id {
+      font-size: 18px;
+      font-weight: bold;
+      color: #333;
+    }
+    .note {
+      margin: 15px 0;
+      font-size: 16px;
+      color: #444;
+    }
+    .apps {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin: 20px 0;
+    }
+    .apps img {
+      width: 40px;
+      height: 40px;
+    }
+    .btn {
+      display: inline-block;
+      background: #4CAF50;
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 16px;
+      text-decoration: none;
+      transition: background 0.2s;
+      margin-top: 15px;
+      cursor: pointer;
+    }
+    .btn:hover {
+      background: #43a047;
+    }
+    .btn.secondary {
+      background: #2196F3;
+      margin-left: 10px;
+    }
+    .btn.secondary:hover {
+      background: #1976D2;
+    }
+    input.amount-box {
+      width: 80%;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      margin-top: 10px;
+      text-align: center;
+    }
+    .footer {
+      margin-top: 20px;
+      font-size: 12px;
+      color: #777;
+    }
+    /* Toast */
+    .toast {
+      visibility: hidden;
+      min-width: 200px;
+      margin-left: -100px;
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      border-radius: 8px;
+      padding: 12px;
+      position: fixed;
+      left: 50%;
+      bottom: 30px;
+      font-size: 14px;
+      z-index: 1;
+      opacity: 0;
+      transition: opacity 0.5s, bottom 0.5s;
+    }
+    .toast.show {
+      visibility: visible;
+      opacity: 1;
+      bottom: 50px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <!-- Profile Picture -->
+    <img class="profile" src="https://drive.google.com/uc?export=view&id=1KafNRpWI8QM3tNtA5YcqFfizG6Hg_tQF" alt="Krishna Systems">
+
+    <h2>Pay Krishna Systems</h2>
+    <p class="upi-id">UPI ID: 9433310187@upi</p>
+
+    <!-- QR Code -->
+    <img id="qrCode" class="qr" src="https://api.qrserver.com/v1/create-qr-code/?data=upi://pay?pa=9433310187@upi&pn=Krishna%20Systems&tn=Thanks%20For%20Doing%20Business%20with%20Us!&cu=INR&size=250x250" alt="UPI QR Code">
+
+    <!-- Message -->
+    <p class="note">Thanks for doing business with us!</p>
+
+    <!-- UPI Apps -->
+    <div class="apps">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/2/2b/Google_Pay_Logo.svg" alt="Google Pay">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/f/f5/PhonePe_Logo.svg" alt="PhonePe">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/6/6c/Paytm_logo.png" alt="Paytm">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/9/95/BHIM-UPI-Logo-vector.svg" alt="BHIM UPI">
+    </div>
+
+    <!-- Custom Amount -->
+    <input type="number" id="amount" class="amount-box" placeholder="Enter Amount (₹)">
+    <br>
+    <a id="payLink" class="btn" href="upi://pay?pa=9433310187@upi&pn=Krishna%20Systems&tn=Payment&cu=INR">
+      Pay Now
+    </a>
+    <button class="btn secondary" onclick="copyUPILink()">Copy Link</button>
+
+    <p class="footer">© 2025 Krishna Systems</p>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="toast">UPI Link copied!</div>
+
+  <script>
+    const amountInput = document.getElementById("amount");
+    const payLink = document.getElementById("payLink");
+    const qrCode = document.getElementById("qrCode");
+
+    function updateLink() {
+      let amount = amountInput.value;
+      let baseLink = "upi://pay?pa=9433310187@upi&pn=Krishna%20Systems&tn=Payment&cu=INR";
+      let finalLink = baseLink;
+
+      if (amount && amount > 0) {
+        finalLink += "&am=" + amount;
+      }
+
+      // Update pay button
+      payLink.href = finalLink;
+
+      // Update QR code
+      qrCode.src = "https://api.qrserver.com/v1/create-qr-code/?data=" + encodeURIComponent(finalLink) + "&size=250x250";
+    }
+
+    amountInput.addEventListener("input", updateLink);
+
+    function copyUPILink() {
+      updateLink();
+      navigator.clipboard.writeText(payLink.href).then(() => {
+        let toast = document.getElementById("toast");
+        toast.className = "toast show";
+        setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 2500);
+      });
+    }
+  </script>
+
+</body>
+</html>
