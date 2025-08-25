@@ -7,7 +7,7 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #1e3c72, #2a5298); /* Softer blue gradient */
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
       text-align: center;
       padding: 20px;
       color: #fff;
@@ -63,9 +63,7 @@
     .qr {
       margin: 25px auto;
     }
-    .qr img {
-      width: 230px;
-      height: 230px;
+    #qrcode canvas {
       border: 6px solid #fff;
       border-radius: 12px;
       background: #fff;
@@ -105,9 +103,7 @@
   <button class="btn" onclick="copyLink()">Copy Link</button>
 
   <!-- QR Code -->
-  <div class="qr">
-    <img id="qrCode" alt="UPI QR Code">
-  </div>
+  <div class="qr" id="qrcode"></div>
 
   <!-- UPI Logos -->
   <div class="upi-logos">
@@ -117,24 +113,36 @@
     <img src="Images/upi.png" alt="UPI" onclick="payUPI()">
   </div>
 
+  <!-- QRCode.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <script>
     const amountInput = document.getElementById("amount");
-    const qrCode = document.getElementById("qrCode");
+    const qrcodeDiv = document.getElementById("qrcode");
     const baseLink = "upi://pay?pa=9433310187@upi&pn=Krishna%20Systems&tn=Thanks%20for%20choosing%20Krishna%20Systems&am=";
 
-    // Update QR dynamically
-    function updateQR() {
-      let amount = amountInput.value;
-      if (!amount || amount <= 0 || amount > 100000) amount = 0;
-      let link = baseLink + amount;
-      let qrUrl = "https://chart.googleapis.com/chart?cht=qr&chs=250x250&chl=" + encodeURIComponent(link);
-      qrCode.src = qrUrl;
+    let qr;
+
+    function generateQR(amount) {
+      qrcodeDiv.innerHTML = ""; // Clear previous QR
+      qr = new QRCode(qrcodeDiv, {
+        text: baseLink + (amount || 0),
+        width: 230,
+        height: 230,
+        colorDark: "#000000",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.H
+      });
     }
 
-    // Run once on load
-    updateQR();
+    // Initial QR
+    generateQR(0);
 
-    amountInput.addEventListener("input", updateQR);
+    // Update QR dynamically
+    amountInput.addEventListener("input", () => {
+      let amount = amountInput.value;
+      if (!amount || amount <= 0 || amount > 100000) amount = 0;
+      generateQR(amount);
+    });
 
     // Pay Now
     function payUPI() {
