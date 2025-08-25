@@ -8,181 +8,121 @@
     body {
       font-family: Arial, sans-serif;
       text-align: center;
-      background: #f5f5f5;
-      padding: 30px;
+      background: #f9f9f9;
+      margin: 0;
+      padding: 0;
     }
-    .card {
-      background: #fff;
-      border-radius: 12px;
+    .container {
       max-width: 400px;
-      margin: auto;
-      padding: 25px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      margin: 30px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     }
-    .profile {
-      width: 100px;
-      height: 100px;
+    img.profile {
+      width: 120px;
+      height: 120px;
       border-radius: 50%;
-      margin: auto;
-      display: block;
       object-fit: cover;
-      border: 3px solid #4CAF50;
+      margin: 15px auto;
+      display: block;
     }
-    img.qr {
-      width: 250px;
-      height: 250px;
-      margin: 20px 0;
-    }
-    .upi-id {
-      font-size: 18px;
-      font-weight: bold;
+    h2 {
+      margin: 10px 0;
       color: #333;
     }
-    .note {
-      margin: 15px 0;
-      font-size: 16px;
-      color: #444;
-    }
-    .apps {
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-      margin: 20px 0;
-    }
-    .apps img {
-      width: 40px;
-      height: 40px;
-    }
-    .btn {
-      display: inline-block;
-      background: #4CAF50;
-      color: #fff;
-      padding: 12px 20px;
-      border-radius: 8px;
-      font-size: 16px;
-      text-decoration: none;
-      transition: background 0.2s;
-      margin-top: 15px;
-      cursor: pointer;
-    }
-    .btn:hover {
-      background: #43a047;
-    }
-    .btn.secondary {
-      background: #2196F3;
-      margin-left: 10px;
-    }
-    .btn.secondary:hover {
-      background: #1976D2;
-    }
-    input.amount-box {
-      width: 80%;
+    input {
       padding: 10px;
-      font-size: 16px;
+      width: 90%;
+      margin: 10px 0;
       border: 1px solid #ccc;
-      border-radius: 8px;
-      margin-top: 10px;
-      text-align: center;
+      border-radius: 6px;
+      font-size: 16px;
     }
-    .footer {
-      margin-top: 20px;
-      font-size: 12px;
-      color: #777;
+    a.button {
+      display: inline-block;
+      margin: 10px;
+      padding: 12px 20px;
+      background: #4CAF50;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: bold;
     }
-    /* Toast */
-    .toast {
-      visibility: hidden;
-      min-width: 200px;
-      margin-left: -100px;
-      background-color: #333;
-      color: #fff;
-      text-align: center;
-      border-radius: 8px;
-      padding: 12px;
-      position: fixed;
-      left: 50%;
-      bottom: 30px;
-      font-size: 14px;
-      z-index: 1;
-      opacity: 0;
-      transition: opacity 0.5s, bottom 0.5s;
+    a.button:hover {
+      background: #45a049;
     }
-    .toast.show {
-      visibility: visible;
-      opacity: 1;
-      bottom: 50px;
+    .small-btn {
+      background: #007BFF;
+      padding: 10px 15px;
+    }
+    .small-btn:hover {
+      background: #0069d9;
     }
   </style>
 </head>
 <body>
-
-  <div class="card">
+  <div class="container">
     <!-- Profile Picture -->
-    <img class="profile" src="https://drive.google.com/uc?export=view&id=1KafNRpWI8QM3tNtA5YcqFfizG6Hg_tQF" alt="Krishna Systems">
+    <img class="profile" 
+      src="https://drive.google.com/uc?export=view&id=1KafNRpWI8QM3tNtA5YcqFfizG6Hg_tQF" 
+      alt="Krishna Systems">
 
-    <h2>Pay Krishna Systems</h2>
-    <p class="upi-id">UPI ID: 9433310187@upi</p>
+    <h2>Krishna Systems</h2>
+    <p>Pay securely via UPI</p>
+
+    <!-- Amount Input -->
+    <label for="amount">Enter Amount (₹):</label><br>
+    <input type="number" id="amount" min="1" max="100000" placeholder="e.g. 500" oninput="updatePayment()">
 
     <!-- QR Code -->
-    <img id="qrCode" class="qr" src="https://api.qrserver.com/v1/create-qr-code/?data=upi://pay?pa=9433310187@upi&pn=Krishna%20Systems&tn=Thanks%20For%20Doing%20Business%20with%20Us!&cu=INR&size=250x250" alt="UPI QR Code">
-
-    <!-- Message -->
-    <p class="note">Thanks for doing business with us!</p>
-
-    <!-- UPI Apps -->
-    <div class="apps">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/2/2b/Google_Pay_Logo.svg" alt="Google Pay">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/f/f5/PhonePe_Logo.svg" alt="PhonePe">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/6/6c/Paytm_logo.png" alt="Paytm">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/9/95/BHIM-UPI-Logo-vector.svg" alt="BHIM UPI">
+    <div>
+      <img id="qrcode" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=9433310187@upi&pn=Krishna%20Systems&tn=Thanks%20for%20your%20payment!" 
+           alt="UPI QR Code" style="margin:20px auto;display:block;">
     </div>
 
-    <!-- Custom Amount -->
-    <input type="number" id="amount" class="amount-box" placeholder="Enter Amount (₹)">
-    <br>
-    <a id="payLink" class="btn" href="upi://pay?pa=9433310187@upi&pn=Krishna%20Systems&tn=Payment&cu=INR">
-      Pay Now
+    <!-- Buttons -->
+    <a id="payButton" class="button" 
+       href="upi://pay?pa=9433310187@upi&pn=Krishna%20Systems&tn=Thanks%20for%20your%20payment!">
+       Pay Now
     </a>
-    <button class="btn secondary" onclick="copyUPILink()">Copy Link</button>
-
-    <p class="footer">© 2025 Krishna Systems</p>
+    <a id="copyLink" class="button small-btn" href="javascript:void(0)" onclick="copyLink()">Copy Link</a>
   </div>
 
-  <!-- Toast -->
-  <div id="toast" class="toast">UPI Link copied!</div>
-
   <script>
-    const amountInput = document.getElementById("amount");
-    const payLink = document.getElementById("payLink");
-    const qrCode = document.getElementById("qrCode");
+    function updatePayment() {
+      let amount = document.getElementById("amount").value;
 
-    function updateLink() {
-      let amount = amountInput.value;
-      let baseLink = "upi://pay?pa=9433310187@upi&pn=Krishna%20Systems&tn=Payment&cu=INR";
-      let finalLink = baseLink;
-
-      if (amount && amount > 0) {
-        finalLink += "&am=" + amount;
+      if (amount > 100000) {
+        alert("Maximum limit is ₹1,00,000");
+        document.getElementById("amount").value = "";
+        return;
       }
 
-      // Update pay button
-      payLink.href = finalLink;
+      let upiLink = "upi://pay?pa=9433310187@upi&pn=Krishna%20Systems&tn=Thanks%20for%20your%20payment!";
+      if (amount) {
+        upiLink += "&am=" + amount;
+      }
 
-      // Update QR code
-      qrCode.src = "https://api.qrserver.com/v1/create-qr-code/?data=" + encodeURIComponent(finalLink) + "&size=250x250";
+      // Update QR Code
+      document.getElementById("qrcode").src =
+        "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" + encodeURIComponent(upiLink);
+
+      // Update Pay Button
+      document.getElementById("payButton").href = upiLink;
+
+      // Save link for Copy button
+      document.getElementById("copyLink").setAttribute("data-link", upiLink);
     }
 
-    amountInput.addEventListener("input", updateLink);
-
-    function copyUPILink() {
-      updateLink();
-      navigator.clipboard.writeText(payLink.href).then(() => {
-        let toast = document.getElementById("toast");
-        toast.className = "toast show";
-        setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 2500);
+    function copyLink() {
+      let link = document.getElementById("copyLink").getAttribute("data-link") || 
+                 "upi://pay?pa=9433310187@upi&pn=Krishna%20Systems&tn=Thanks%20for%20your%20payment!";
+      navigator.clipboard.writeText(link).then(() => {
+        alert("UPI Payment link copied!");
       });
     }
   </script>
-
 </body>
 </html>
