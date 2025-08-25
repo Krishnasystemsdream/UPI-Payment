@@ -3,188 +3,167 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Krishna Systems - Payment</title>
+  <title>Krishna Systems - UPI Payment</title>
   <style>
     body {
-      margin: 0;
       font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #4facfe, #00f2fe);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-
-    .container {
-      background: #fff;
-      padding: 25px;
-      border-radius: 16px;
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
       text-align: center;
-      width: 350px;
-      box-shadow: 0px 6px 20px rgba(0,0,0,0.15);
-    }
-
-    .profile-pic {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      margin: 0 auto 15px auto;
-      object-fit: cover;
-      border: 3px solid #4facfe;
-    }
-
-    h2 {
+      padding: 20px;
+      color: #fff;
       margin: 0;
-      color: #333;
     }
-
+    .profile-pic {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin: 20px auto 10px;
+      border: 4px solid #fff;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+    h1 {
+      margin: 10px 0 5px;
+      font-size: 28px;
+      font-weight: bold;
+    }
     .tagline {
-      font-size: 13px;
-      color: #777;
+      font-size: 14px;
+      font-weight: 500;
+      color: #e0e0e0;
       margin-bottom: 20px;
     }
-
-    label {
-      font-weight: bold;
-      display: block;
-      margin-bottom: 8px;
-      font-size: 14px;
-    }
-
-    input[type="number"] {
-      padding: 10px;
-      width: 100%;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      margin-bottom: 10px;
-      text-align: center;
-      font-size: 16px;
-    }
-
-    button {
-      margin-top: 10px;
+    input {
       padding: 12px;
-      width: 100%;
-      background: #4facfe;
-      color: white;
+      width: 250px;
+      font-size: 16px;
+      border-radius: 6px;
+      border: none;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+    .btn {
+      display: inline-block;
+      padding: 12px 30px;
+      font-size: 16px;
       font-weight: bold;
+      text-transform: uppercase;
+      background: #ff9800;
+      color: #fff;
       border: none;
       border-radius: 8px;
       cursor: pointer;
-      transition: 0.3s;
+      margin: 8px 5px;
+      transition: transform 0.2s ease, background 0.3s ease;
     }
-
-    button:hover {
-      background: #00c6ff;
+    .btn:hover {
+      background: #e68900;
+      transform: scale(1.05);
     }
-
-    .logos {
-      display: flex;
-      justify-content: space-around;
-      margin-top: 20px;
-      margin-bottom: 20px;
-    }
-
-    .logos img {
-      width: 50px;
-      height: auto;
-    }
-
     .qr {
-      margin: 15px 0;
+      margin: 25px auto;
     }
-
     .qr img {
-      width: 180px;
-      height: auto;
+      width: 230px;
+      height: 230px;
+      border: 6px solid #fff;
       border-radius: 12px;
+      background: #fff;
     }
-
-    .copy-btn {
-      margin-bottom: 15px;
-      background: #00c6ff;
+    .upi-logos {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 25px;
+      flex-wrap: wrap;
+    }
+    .upi-logos img {
+      width: 80px;
+      height: auto;
+      transition: transform 0.2s ease-in-out;
+      cursor: pointer;
+    }
+    .upi-logos img:hover {
+      transform: scale(1.1);
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <img src="Images/Profile.jpg" alt="Profile" class="profile-pic">
-    <h2>Krishna Systems</h2>
-    <div class="tagline">Computer • CCTV • Laptop • Networking</div>
 
-    <button class="copy-btn" onclick="copyLink()">Copy Payment Link</button>
+  <!-- Profile -->
+  <img src="Images/Profile.jpg" alt="Krishna Systems Logo" class="profile-pic">
 
-    <label for="amount">Enter Amount</label>
-    <input type="number" id="amount" placeholder="Enter amount (Max ₹100000)" min="1" max="100000">
+  <!-- Company -->
+  <h1>Krishna Systems</h1>
+  <div class="tagline">Computer • CCTV • Laptop • Networking</div>
 
-    <button id="payBtn"><b>PAY NOW</b></button>
+  <!-- Input -->
+  <input type="number" id="amount" placeholder="Enter Amount (₹)" min="1" max="100000"><br>
 
-    <div class="qr">
-      <img id="qrCode" src="" alt="UPI QR Code">
-    </div>
+  <!-- Buttons -->
+  <button class="btn" onclick="payUPI()">Pay Now</button>
+  <button class="btn" onclick="copyLink()">Copy Link</button>
 
-    <div class="logos">
-      <img src="Images/gpay.png" alt="GPay">
-      <img src="Images/paytm.png" alt="Paytm">
-      <img src="Images/phonepe.png" alt="PhonePe">
-    </div>
+  <!-- QR Code -->
+  <div class="qr">
+    <img id="qrCode" 
+      src="https://chart.googleapis.com/chart?cht=qr&chs=250x250&chl=upi://pay?pa=9433310187@upi&tn=Thanks%20for%20choosing%20Krishna%20Systems&am=0" 
+      alt="UPI QR Code">
+  </div>
+
+  <!-- UPI Logos -->
+  <div class="upi-logos">
+    <img src="Images/gpay.png" alt="GPay" onclick="payUPI()">
+    <img src="Images/paytm.png" alt="Paytm" onclick="payUPI()">
+    <img src="Images/phonepe.png" alt="PhonePe" onclick="payUPI()">
+    <img src="Images/upi.png" alt="UPI" onclick="payUPI()">
   </div>
 
   <script>
-    const payBtn = document.getElementById('payBtn');
-    const amountInput = document.getElementById('amount');
-    const qrCode = document.getElementById('qrCode');
-    const baseLink = "upi://pay?pa=9433310187@upi&tn=Thanks%20for%20choosing%20Krishna%20Systems&am=";
+    const amountInput = document.getElementById("amount");
+    const qrCode = document.getElementById("qrCode");
+    const baseLink = "upi://pay?pa=9433310187@upi&pn=Krishna%20Systems&tn=Thanks%20for%20choosing%20Krishna%20Systems&am=";
 
-    // Default QR (₹0)
-    function setDefaultQR() {
-      let link = baseLink + "0";
-      qrCode.src = "https://chart.googleapis.com/chart?cht=qr&chs=250x250&chl=" + encodeURIComponent(link);
-    }
-
-    // Function to update QR dynamically
+    // Update QR dynamically
     function updateQR() {
       let amount = amountInput.value;
       if (!amount || amount <= 0 || amount > 100000) {
-        setDefaultQR();
+        qrCode.src = "https://chart.googleapis.com/chart?cht=qr&chs=250x250&chl=" 
+          + encodeURIComponent(baseLink + "0");
         return;
       }
       let link = baseLink + amount;
-      qrCode.src = "https://chart.googleapis.com/chart?cht=qr&chs=250x250&chl=" + encodeURIComponent(link);
+      qrCode.src = "https://chart.googleapis.com/chart?cht=qr&chs=250x250&chl=" 
+        + encodeURIComponent(link);
     }
 
-    // Update QR on input
     amountInput.addEventListener("input", updateQR);
 
-    // Pay Now Button
-    payBtn.addEventListener("click", () => {
+    // Pay Now
+    function payUPI() {
       let amount = amountInput.value;
       if (!amount || amount <= 0) {
-        alert("Please enter a valid amount");
+        alert("⚠️ Please enter a valid amount");
         return;
       }
       if (amount > 100000) {
-        alert("Amount cannot exceed ₹100000");
+        alert("⚠️ Amount limit is ₹1,00,000");
         return;
       }
       let link = baseLink + amount;
       window.location.href = link;
-    });
-
-    // Copy Payment Link
-    function copyLink() {
-      let amount = amountInput.value || 0;
-      if (amount <= 0 || amount > 100000) {
-        amount = 0;
-      }
-      let link = baseLink + amount;
-      navigator.clipboard.writeText(link).then(() => {
-        alert("Payment link copied!");
-      });
     }
 
-    // Load default QR when page opens
-    setDefaultQR();
+    // Copy Link
+    function copyLink() {
+      let amount = amountInput.value || 0;
+      if (amount > 100000) amount = 100000;
+      let link = baseLink + amount;
+      navigator.clipboard.writeText(link).then(() => {
+        alert("✅ Payment link copied!");
+      });
+    }
   </script>
+
 </body>
 </html>
