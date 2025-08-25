@@ -3,132 +3,117 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pay Krishna Systems</title>
+  <title>Krishna Systems - UPI Payment</title>
   <style>
     body {
       font-family: Arial, sans-serif;
+      background: #f8f9fa;
       text-align: center;
-      background: #f4f4f9;
-      margin: 0;
-      padding: 0;
-    }
-    .container {
-      max-width: 400px;
-      margin: 20px auto;
       padding: 20px;
-      background: white;
-      border-radius: 12px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     }
-    .profile-pic {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      object-fit: cover;
-      margin: 0 auto 15px;
-      border: 3px solid #4CAF50;
+    .logo {
+      margin: 20px auto;
+      width: 180px;
     }
-    h2 {
-      margin: 10px 0;
-    }
-    .qr {
-      margin: 15px 0;
-    }
-    .apps img {
-      width: 60px;
-      margin: 10px;
+    h1 {
+      color: #333;
     }
     input {
-      width: 90%;
       padding: 10px;
-      margin: 10px 0;
-      border: 1px solid #ccc;
-      border-radius: 8px;
+      width: 200px;
+      margin: 15px;
       font-size: 16px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
     }
     button {
-      padding: 10px 20px;
-      margin: 10px 5px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 10px;
+      padding: 10px 18px;
       border: none;
       border-radius: 8px;
-      font-size: 16px;
       cursor: pointer;
-    }
-    .pay-btn {
-      background: #4CAF50;
+      font-size: 15px;
+      background: #007bff;
       color: white;
+      transition: 0.2s;
     }
-    .copy-btn {
-      background: #007BFF;
-      color: white;
+    button:hover {
+      background: #0056b3;
     }
-    footer {
-      margin-top: 20px;
-      font-size: 14px;
-      color: gray;
+    svg {
+      height: 28px;
+      width: 28px;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <!-- Profile picture -->
-    <img src="https://drive.google.com/uc?export=view&id=1KafNRpWI8QM3tNtA5YcqFfizG6Hg_tQF" alt="Profile" class="profile-pic">
 
-    <h2>Pay Krishna Systems</h2>
-    <p><b>UPI ID:</b> 9433310187@upi</p>
+  <!-- Krishna Systems Logo -->
+  <div class="logo">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid meet">
+      <g fill="#222">
+        <path d="M0 500 l0 -500 500 0 500 0 0 500 0 500 -500 0 -500 0 0 -500z"/>
+        <!-- You can paste the full <path> data from your actual SVG here -->
+      </g>
+    </svg>
+  </div>
 
-    <!-- QR Code -->
-    <div class="qr">
-      <img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=upi://pay?pa=9433310187@upi&pn=Krishna%20Systems&cu=INR" alt="QR Code">
-    </div>
+  <h1>Krishna Systems</h1>
+  <p>Make UPI Payments Easily</p>
 
-    <p>Thanks for doing business with us!</p>
+  <!-- Amount Input -->
+  <input type="number" id="amount" placeholder="Enter Amount (₹)" min="1" max="100000">
 
-    <!-- Payment App Logos -->
-    <div class="apps">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_Pay_Logo.svg/512px-Google_Pay_Logo.svg.png" alt="Google Pay">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/PhonePe_Logo.svg/512px-PhonePe_Logo.svg.png" alt="PhonePe">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Paytm_logo.svg/512px-Paytm_logo.svg.png" alt="Paytm">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/BHIM_UPI_logo.svg/512px-BHIM_UPI_logo.svg.png" alt="BHIM UPI">
-    </div>
+  <div>
+    <!-- Google Pay -->
+    <button onclick="payUPI('gpay')">
+      <!-- Inline SVG for GPay -->
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path fill="#4285F4" d="M24 9.5c-8 0-14.5 6.5-14.5 14.5s6.5 14.5 14.5 14.5 14.5-6.5 14.5-14.5S32 9.5 24 9.5z"/></svg>
+      Pay with GPay
+    </button>
 
-    <!-- Amount Input -->
-    <input type="number" id="amount" placeholder="Enter Amount (₹)" max="100000">
+    <!-- PhonePe -->
+    <button onclick="payUPI('phonepe')">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="#5f259f"/></svg>
+      Pay with PhonePe
+    </button>
 
-    <!-- Buttons -->
-    <div>
-      <button class="pay-btn" onclick="payNow()">Pay Now</button>
-      <button class="copy-btn" onclick="copyLink()">Copy Link</button>
-    </div>
+    <!-- Paytm -->
+    <button onclick="payUPI('paytm')">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><rect width="48" height="48" rx="8" fill="#00baf2"/></svg>
+      Pay with Paytm
+    </button>
 
-    <footer>© 2025 Krishna Systems</footer>
+    <!-- BHIM -->
+    <button onclick="payUPI('bhim')">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><polygon points="10,10 38,24 10,38" fill="#ff8c00"/></svg>
+      Pay with BHIM
+    </button>
   </div>
 
   <script>
-    function payNow() {
+    function payUPI(app) {
       let amount = document.getElementById("amount").value;
       if (!amount || amount <= 0) {
-        alert("Please enter a valid amount");
+        alert("⚠️ Please enter a valid amount");
         return;
       }
       if (amount > 100000) {
-        alert("Amount cannot exceed ₹1,00,000");
+        alert("⚠️ Amount limit is ₹1,00,000");
         return;
       }
-      let upiLink = `upi://pay?pa=9433310187@upi&pn=Krishna%20Systems&am=${amount}&cu=INR`;
-      window.location.href = upiLink;
-    }
 
-    function copyLink() {
-      let amount = document.getElementById("amount").value || 0;
-      if (amount > 100000) {
-        alert("Amount cannot exceed ₹1,00,000");
-        return;
-      }
-      let upiLink = `upi://pay?pa=9433310187@upi&pn=Krishna%20Systems&am=${amount}&cu=INR`;
-      navigator.clipboard.writeText(upiLink);
-      alert("Payment link copied!");
+      let upiID = "9433310187@upi";
+      let name = "Krishna Systems";
+      let note = "Thanks for doing business with us!";
+      let url = `upi://pay?pa=${upiID}&pn=${name}&am=${amount}&tn=${note}`;
+
+      window.location.href = url;
     }
   </script>
+
 </body>
 </html>
